@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Notitas</string>
+    <string name="action_settings">Ajustes</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Primer Fragmento</string>
+    <string name="second_fragment_label">Segundo Fragmento</string>
+    <string name="next">Sigueinte</string>
+    <string name="previous">Anterior</string>
+
+    <string name="hello_first_fragment">Hola primer fragmento</string>
+    <string name="hello_second_fragment">Segun fragmento, Hla</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Fragmento en blanco</string>
+</resources>
