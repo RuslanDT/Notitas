@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import java.time.Instant
 import java.util.Date
 
 @Entity(tableName = "notes")
@@ -23,6 +24,6 @@ data class Task(
     val id: Int,
     val taskTitle: String,
     val taskBody: String,
-    val initialDate: Date,
-    val finalDate: Date
+    val initialDate: String,
+    val finalDate: String
 ) : Parcelable
