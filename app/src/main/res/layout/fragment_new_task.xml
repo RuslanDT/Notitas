@@ -35,33 +35,33 @@
                 android:padding="16dp">
 
                 <EditText
-                    android:id="@+id/etNoteTitle"
+                    android:id="@+id/titleTask"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:background="@android:color/transparent"
+                    android:ems="10"
                     android:hint="Título"
-                    android:inputType="textCapSentences"
-
-                    android:padding="4dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:inputType="textPersonName" />
 
                 <EditText
-                    android:id="@+id/etNoteBody"
+                    android:id="@+id/taskBody"
+                    style="@style/Widget.AppCompat.EditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:autofillHints=""
-                    android:background="@android:color/transparent"
-                    android:gravity="start|top"
-                    android:hint="Descripción"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/hintColor"
-                    android:textSize="18sp" />
+                    android:layout_height="78dp"
+                    android:ems="10"
+                    android:hint="Tarea"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de finalización:" />
+
+                <CalendarView
+                    android:id="@+id/finishDate"
+                    android:layout_width="244dp"
+                    android:layout_height="328dp" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

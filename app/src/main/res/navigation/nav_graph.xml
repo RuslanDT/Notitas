@@ -23,6 +23,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -53,5 +60,27 @@
             android:name="note"
             app:argType="com.example.noteeapp.model.Note"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTaskFragment"
+        android:name="com.example.noteeapp.fragments.NewTaskFragment"
+        android:label="NewTaskFragment"
+        tools:layout="@layout/fragment_new_note">
+        <action
+            android:id="@+id/action_newTaskFragment_to_homeTaskFragment"
+            app:destination="@id/homeTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeTaskFragment"
+        android:name="com.example.noteeapp.fragments.HomeTaskFragment"
+        android:label="HomeTaskFragment"
+        tools:layout="@layout/fragment_new_note">
+
+        <action
+            android:id="@+id/action_homeTaskFragment_to_newNoteFragment"
+            app:destination="@id/newNoteFragment" />
+        <action
+            android:id="@+id/action_homeTaskFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment" />
     </fragment>
 </navigation>

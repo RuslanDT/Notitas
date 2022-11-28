@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.noteeapp.model.Task
-import com.example.noteeapp.repository.NoteRepository
 import com.example.noteeapp.repository.TaskRepository
 import kotlinx.coroutines.launch
 
