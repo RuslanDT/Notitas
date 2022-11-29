@@ -58,6 +58,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.fabAddNote.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

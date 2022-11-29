@@ -1,5 +1,6 @@
 package com.example.noteeapp.model
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,7 +14,10 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val noteTitle: String,
-    val noteBody: String
+    val noteBody: String,
+    val noteImagen: String,
+    //val noteAudio: String,
+    val noteDate: String
 ) : Parcelable
 
 

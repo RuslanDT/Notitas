@@ -7,23 +7,37 @@
     android:background="@color/background_white"
     tools:context=".fragments.UpdateNoteFragment">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:src="@drawable/ic_check"
+        android:tintMode="@color/white"
+        app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:layout_width="383dp"
+        android:layout_height="780dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:elevation="8dp"
             app:cardCornerRadius="5dp">
@@ -50,8 +64,8 @@
 
                 <EditText
                     android:id="@+id/etNoteBodyUpdate"
-                    android:layout_width="315dp"
-                    android:layout_height="579dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="78dp"
                     android:layout_marginTop="16dp"
                     android:autofillHints=""
                     android:background="@android:color/transparent"
@@ -64,20 +78,43 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/enotaImgenUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            tools:src="@tools:sample/avatars" />
+
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabUpdate"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:clickable="true"
-        android:src="@drawable/ic_check"
-        android:tintMode="@color/white"
-        app:borderWidth="0dp"
+        android:background="#B5131313"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/btnFotoUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <ImageView
+            android:id="@+id/btnVozUpdtae"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_btn_speak_now" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
