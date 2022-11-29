@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.noteeapp.databinding.NoteItemBinding
 import com.example.noteeapp.fragments.HomeFragmentDirections
 import com.example.noteeapp.model.Note
-import kotlin.random.Random
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 

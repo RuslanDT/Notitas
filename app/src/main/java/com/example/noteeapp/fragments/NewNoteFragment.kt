@@ -111,7 +111,7 @@ class NewNoteFragment : Fragment() {
         val imagen = photoURI.toString()
 
         if (noteTitle.isNotEmpty()) {
-            val note = Note(0, noteTitle, noteBody, imagen,timeStamp)
+            val note = Note(0, noteTitle, noteBody, imagen, "",timeStamp)
             noteViewModel.addNote(note)
             Snackbar.make(
                 view,
