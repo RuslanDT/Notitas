@@ -14,16 +14,21 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.noteeapp.database.NoteDataBase
+import com.example.noteeapp.database.TaskDataBase
 import com.example.noteeapp.databinding.ActivityMainBinding
 import com.example.noteeapp.repository.NoteRepository
+import com.example.noteeapp.repository.TaskRepository
 import com.example.noteeapp.viewModel.NoteViewModel
 import com.example.noteeapp.viewModel.NoteViewModelProviderFactory
+import com.example.noteeapp.viewModel.TaskViewModel
+import com.example.noteeapp.viewModel.TaskViewModelProviderFactory
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     lateinit var noteViewModel: NoteViewModel
+    lateinit var taskViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             .findNavController()
 
         setUp()
-
+        setUpTask()
     }
 
     override fun onBackPressed() {
@@ -61,5 +66,22 @@ class MainActivity : AppCompatActivity() {
             viewModelProviderFactory
         )
             .get(NoteViewModel::class.java)
+    }
+    private fun setUpTask() {
+        val taskDataBase = TaskDataBase.getInstance(this)
+        val taskRepository = TaskRepository(
+            taskDataBase
+        )
+
+        val viewModelProviderFactory = TaskViewModelProviderFactory(
+            application,
+            taskRepository
+        )
+
+        taskViewModel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        )
+            .get(TaskViewModel::class.java)
     }
 }

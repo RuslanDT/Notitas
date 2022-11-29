@@ -13,16 +13,17 @@ import com.example.noteeapp.R
 import com.example.noteeapp.adapter.NoteAdapter
 import com.example.noteeapp.adapter.TaskAdapter
 import com.example.noteeapp.databinding.FragmentHomeBinding
+import com.example.noteeapp.databinding.FragmentTaskHomeBinding
 import com.example.noteeapp.viewModel.NoteViewModel
+import com.example.noteeapp.viewModel.TaskViewModel
 
 
-class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
-    private var _binding: FragmentHomeBinding? = null
+class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
+    private var _binding: FragmentTaskHomeBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var taskViewModel: TaskViewModel
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var noteAdapter: NoteAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,26 +35,26 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentTaskHomeBinding.inflate(inflater, container, false)
 
-        noteViewModel = (activity as MainActivity).noteViewModel
+        taskViewModel = (activity as MainActivity).taskViewModel
 
         setUpRecyclerView()
         return binding.root
     }
 
     private fun setUpRecyclerView() {
-        noteAdapter = NoteAdapter()
+        taskAdapter = TaskAdapter()
         binding.notesRV.apply {
             layoutManager = StaggeredGridLayoutManager(
                 2,
                 StaggeredGridLayoutManager.VERTICAL
             )
             setHasFixedSize(true)
-            adapter = noteAdapter
-            noteViewModel.getAllNotes().observe(viewLifecycleOwner) { notes ->
-                noteAdapter.differ.submitList(notes)
-                notes.updateUI()
+            adapter = taskAdapter
+            taskViewModel.getAllTasks().observe(viewLifecycleOwner) { tasks ->
+                taskAdapter.differ.submitList(tasks)
+                tasks.updateUI()
             }
         }
     }
@@ -74,11 +75,11 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 setOnMenuItemClickListener {
                     when(it!!.itemId){
                         R.id.nota_menu -> {
-                            v.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
+                            v.findNavController().navigate(R.id.action_homeTaskFragment_to_newNoteFragment)
                             true
                         }
                         R.id.tarea_menu -> {
-                            v.findNavController().navigate(R.id.action_homeFragment_to_newTaskFragment)
+                            v.findNavController().navigate(R.id.action_homeTaskFragment_to_newTaskFragment)
                             true
                         }
                         else -> false
@@ -86,7 +87,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }.show()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -131,8 +131,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun searchNote(query: String?) {
         val searchQuery = "%$query%"
-        noteViewModel.searchNote(searchQuery).observe(this) { notes ->
-            noteAdapter.differ.submitList(notes)
+        taskViewModel.searchTask(searchQuery).observe(this) { tasks ->
+            taskAdapter.differ.submitList(tasks)
         }
 
     }
