@@ -38,6 +38,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         noteViewModel = (activity as MainActivity).noteViewModel
 
+
         setUpRecyclerView()
         return binding.root
     }
@@ -61,32 +62,15 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fabAddNote.setOnClickListener {
-            //it.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
-            mostrarPopUp(view)
+            replaceFragment(NewNoteFragment())
         }
     }
-    //boton 2.0
-    //crear funcion para mostrar el PopUp
-    fun mostrarPopUp(v : View){
-        this.context?.let {
-            PopupMenu(it, v).apply {
-                inflate(R.menu.menu_emergente)
-                setOnMenuItemClickListener {
-                    when(it!!.itemId){
-                        R.id.nota_menu -> {
-                            v.findNavController().navigate(R.id.action_homeFragment_to_newNoteFragment)
-                            true
-                        }
-                        R.id.tarea_menu -> {
-                            v.findNavController().navigate(R.id.action_homeFragment_to_newTaskFragment)
-                            true
-                        }
-                        else -> false
-                    }
-                }
-            }.show()
-        }
 
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment_container, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

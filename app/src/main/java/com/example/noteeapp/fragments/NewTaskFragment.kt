@@ -3,6 +3,7 @@ package com.example.noteeapp.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.noteeapp.MainActivity
 import com.example.noteeapp.R
@@ -57,10 +58,17 @@ class NewTaskFragment : Fragment() {
                 "Tarea guardada",
                 Snackbar.LENGTH_SHORT,
             ).show()
-            findNavController().navigate(R.id.action_newTaskFragment_to_homeTaskFragment)
+            replaceFragment(HomeTaskFragment())
         } else {
             activity?.toast("Agrega un titulo")
         }
+    }
+
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment_container, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

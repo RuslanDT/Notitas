@@ -63,10 +63,11 @@ class UpdateNoteFragment : Fragment() {
         binding.fabUpdate.setOnClickListener {
             val title = binding.etNoteTitleUpdate.text.toString().trim()
             val body = binding.etNoteBodyUpdate.text.toString().trim()
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd").format(Date())
+            val timeStamp = SimpleDateFormat("dd/MM/yyyy")
+            val currentDate = timeStamp.format(Date())
 
             if (title.isNotEmpty()) {
-                val updetedNote = Note(currentNote.id, title, body, "", "", timeStamp)
+                val updetedNote = Note(currentNote.id, title, body, "", "", currentDate.toString())
                 noteViewModel.updateNote(updetedNote)
                 activity?.toast("Nota actualizada")
                 it.findNavController()

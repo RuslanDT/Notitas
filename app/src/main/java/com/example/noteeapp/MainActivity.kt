@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.noteeapp.database.NoteDataBase
 import com.example.noteeapp.database.TaskDataBase
 import com.example.noteeapp.databinding.ActivityMainBinding
+import com.example.noteeapp.fragments.HomeFragment
+import com.example.noteeapp.fragments.HomeTaskFragment
 import com.example.noteeapp.repository.NoteRepository
 import com.example.noteeapp.repository.TaskRepository
 import com.example.noteeapp.viewModel.NoteViewModel
@@ -39,8 +42,25 @@ class MainActivity : AppCompatActivity() {
         navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)!!
             .findNavController()
 
+        binding.botonNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.action_notas -> replaceFragment(HomeFragment())
+                R.id.action_tareas -> replaceFragment(HomeTaskFragment())
+                else -> { }
+            }
+            true
+        }
+
+
         setUp()
         setUpTask()
+    }
+
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment_container, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onBackPressed() {

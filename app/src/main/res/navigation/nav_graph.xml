@@ -30,6 +30,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_homeTaskFragment"
+            app:destination="@id/homeTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -82,5 +85,8 @@
         <action
             android:id="@+id/action_homeTaskFragment_to_newTaskFragment"
             app:destination="@id/newTaskFragment" />
+        <action
+            android:id="@+id/action_homeTaskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

@@ -32,7 +32,7 @@ class NewNoteFragment : Fragment() {
     private lateinit var mView: View
     val REQUEST_IMAGE_CAPTURE  = 10
     lateinit var currentVideoPath: String
-    lateinit var photoURI: Uri
+    var photoURI: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,21 +107,30 @@ class NewNoteFragment : Fragment() {
     private fun saveNote(view: View) {
         val noteTitle = binding.etNoteTitle.text.toString().trim()
         val noteBody = binding.etNoteBody.text.toString().trim()
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd").format(Date())
-        val imagen = photoURI.toString()
+        val timeStamp = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = timeStamp.format(Date())
+        var imagen: String = ""
 
-        if (noteTitle.isNotEmpty()) {
-            val note = Note(0, noteTitle, noteBody, imagen, "",timeStamp)
+        if (noteTitle.isNotEmpty() && photoURI != null) {
+            imagen = photoURI.toString()
+            val note = Note(0, noteTitle, noteBody, imagen, "",currentDate.toString())
             noteViewModel.addNote(note)
             Snackbar.make(
                 view,
                 "Nota guardada",
                 Snackbar.LENGTH_SHORT,
             ).show()
-            findNavController().navigate(R.id.action_newNoteFragment_to_homeFragment)
+            replaceFragment(HomeFragment())
         } else {
             activity?.toast("Agrega un titulo")
         }
+    }
+
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment_container, fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
