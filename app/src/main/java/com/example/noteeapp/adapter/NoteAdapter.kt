@@ -3,11 +3,13 @@ package com.example.noteeapp.adapter
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteeapp.databinding.NoteItemBinding
+import com.example.noteeapp.fragments.HomeFragment
 import com.example.noteeapp.fragments.HomeFragmentDirections
 import com.example.noteeapp.model.Note
 
@@ -26,6 +28,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         holder.itemBinding.tvNoteTitle.text = currentNote.noteTitle
         holder.itemBinding.tvNoteBody.text = currentNote.noteBody
+        holder.itemBinding.imgNota.setImageURI(currentNote.noteImagen.toUri())
 
         val random = java.util.Random()
         val color = Color.argb(
@@ -36,8 +39,9 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         )
         holder.itemBinding.viewColor.setBackgroundColor(color)
         holder.itemView.setOnClickListener {
-            it.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote))
+            view ->
+            val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
+            view.findNavController().navigate(direction)
         }
 
     }

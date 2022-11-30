@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -34,7 +35,9 @@ class UpdateNoteFragment : Fragment() {
 
     val REQUEST_IMAGE_CAPTURE  = 10
     lateinit var currentVideoPath: String
-    lateinit var photoURI: Uri
+    var photoURI: Uri? = null
+    var videoURI: Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +58,19 @@ class UpdateNoteFragment : Fragment() {
         currentNote = args.note!!
         binding.etNoteTitleUpdate.setText(currentNote.noteTitle)
         binding.etNoteBodyUpdate.setText(currentNote.noteBody)
-        photoURI = currentNote.noteImagen.toUri()
-        binding.enotaImgenUpdate.setImageURI(photoURI)
 
+        //validacion para pintar imagen y video
+        if(currentNote.noteImagen != ""){
+            photoURI = currentNote.noteImagen.toUri()
+            binding.enotaImgenUpdate.setImageURI(photoURI)
+            binding.enotaImgenUpdate.visibility = View.VISIBLE
+        }
+
+        if(currentNote.noteVideo != ""){
+            videoURI = currentNote.noteVideo.toUri()
+            binding.eNotaVideoUpdate.setVideoURI(videoURI)
+            binding.eNotaVideoUpdate.visibility = View.VISIBLE
+        }
 
 
         binding.fabUpdate.setOnClickListener {
@@ -66,8 +79,19 @@ class UpdateNoteFragment : Fragment() {
             val timeStamp = SimpleDateFormat("dd/MM/yyyy")
             val currentDate = timeStamp.format(Date())
 
+            var imagen = ""
+            var video = ""
+
+            if (photoURI != null){
+                imagen = photoURI.toString()
+            }
+
+            if(videoURI != null){
+                video = videoURI.toString()
+            }
+
             if (title.isNotEmpty()) {
-                val updetedNote = Note(currentNote.id, title, body, "", "", currentDate.toString())
+                val updetedNote = Note(currentNote.id, title, body, imagen, video, "", currentDate.toString())
                 noteViewModel.updateNote(updetedNote)
                 activity?.toast("Nota actualizada")
                 it.findNavController()
@@ -75,6 +99,30 @@ class UpdateNoteFragment : Fragment() {
             } else {
                 activity?.toast("Agrega un titulo")
             }
+        }
+
+        binding.enotaImgenUpdate.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle(R.string.alerta_borrarIMG_titulo)
+                .setMessage(R.string.alerta_borrarIMG_mensaje)
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    photoURI = null
+                    binding.enotaImgenUpdate.visibility = View.GONE
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.aceptar) { view, _ ->
+                    Toast.makeText(requireContext(), "Se ha eliminado", Toast.LENGTH_SHORT).show()
+                    view.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+            dialog.show()
+            return@setOnLongClickListener false
+        }
+
+        binding.eNotaVideoUpdate.setOnClickListener{
+            binding.eNotaVideoUpdate.start()
         }
     }
 

@@ -16,6 +16,7 @@ data class Note(
     val noteTitle: String,
     val noteBody: String,
     val noteImagen: String,
+    val noteVideo: String,
     val noteAudio: String,
     val noteDate: String
 ) : Parcelable

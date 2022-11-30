@@ -8,6 +8,19 @@
     android:padding="8dp"
     tools:context=".fragments.HomeFragment">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/boton_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:itemIconSize="0dp"
+        app:itemPaddingBottom="24dp"
+        app:itemPaddingTop="0dp"
+        app:labelVisibilityMode="auto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/bottom_menu" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddNote"
         android:layout_width="wrap_content"
@@ -51,8 +64,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

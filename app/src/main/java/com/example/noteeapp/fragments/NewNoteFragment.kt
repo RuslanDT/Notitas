@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -30,22 +29,25 @@ class NewNoteFragment : Fragment() {
 
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var mView: View
+
     val REQUEST_IMAGE_CAPTURE  = 10
+    val REQUEST_VIDEO_CAPTURE = 20
+
     lateinit var currentVideoPath: String
+    lateinit var currentPhotoPath: String
     var photoURI: Uri? = null
+    var videoURI: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View?{
         _binding = FragmentNewNoteBinding.inflate(inflater, container, false)
 
         binding.btnFoto.setOnClickListener {
@@ -73,10 +75,40 @@ class NewNoteFragment : Fragment() {
                 }
             }
         }
+
+        binding.btnVideo.setOnClickListener {
+            Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
+                takeVideoIntent.resolveActivity(requireActivity().packageManager).also {
+
+                    // Create the File where the photo should go
+                    val videoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        // Error occurred while creating the File
+
+                        null
+                    }
+
+                    // Continue only if the File was successfully created
+                    videoFile?.also {
+                        videoURI = FileProvider.getUriForFile(
+                            requireContext(),
+                            "com.example.noteeapp.fileprovider",
+                            it
+                        )
+                        takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, videoURI)
+                        startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE)
+                    }
+                }
+            }
+        }
+
+        binding.eNoteVideo.setOnClickListener{
+            binding.eNoteVideo.start()
+        }
+
         return binding.root
     }
-
-    lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
     fun createImageFile(): File {
@@ -100,8 +132,6 @@ class NewNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         noteViewModel = (activity as MainActivity).noteViewModel
         mView = view
-
-
     }
 
     private fun saveNote(view: View) {
@@ -109,11 +139,19 @@ class NewNoteFragment : Fragment() {
         val noteBody = binding.etNoteBody.text.toString().trim()
         val timeStamp = SimpleDateFormat("dd/MM/yyyy")
         val currentDate = timeStamp.format(Date())
-        var imagen: String = ""
+        var imagen = ""
+        var video = ""
 
-        if (noteTitle.isNotEmpty() && photoURI != null) {
+        if(photoURI != null){
             imagen = photoURI.toString()
-            val note = Note(0, noteTitle, noteBody, imagen, "",currentDate.toString())
+        }
+
+        if(videoURI != null){
+            video = videoURI.toString()
+        }
+
+        if (noteTitle.isNotEmpty()) {
+            val note = Note(0, noteTitle, noteBody, imagen, video, "", currentDate.toString())
             noteViewModel.addNote(note)
             Snackbar.make(
                 view,
@@ -156,9 +194,13 @@ class NewNoteFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
-            binding.enoteImagen.setImageURI(
-                photoURI
-            )
+            binding.enoteImagen.setImageURI(photoURI)
+            binding.enoteImagen.visibility = View.VISIBLE
+        }
+
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == AppCompatActivity.RESULT_OK) {
+            binding.eNoteVideo.setVideoURI(videoURI)
+            binding.eNoteVideo.visibility = View.VISIBLE
         }
     }
 }

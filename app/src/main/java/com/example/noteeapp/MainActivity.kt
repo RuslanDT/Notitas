@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity() {
         navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)!!
             .findNavController()
 
-        binding.botonNavigationView.setOnItemSelectedListener {
+        /*binding.botonNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.action_notas -> replaceFragment(HomeFragment())
                 R.id.action_tareas -> replaceFragment(HomeTaskFragment())
                 else -> { }
             }
             true
-        }
+        }*/
 
 
         setUp()
