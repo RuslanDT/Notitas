@@ -95,6 +95,12 @@
                 android:layout_marginBottom="40dp"
                 android:visibility="gone" />
 
+            <VideoView
+                android:id="@+id/videoEspectro"
+                android:layout_width="350dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
     </ScrollView>
 

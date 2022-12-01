@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_notas"
-        android:title="Notas"
-        android:menuCategory="container"/>
+        android:menuCategory="container"
+        android:title="Notas" />
     <item
-        android:title="Tareas"
-        android:id="@+id/action_tareas" />
+        android:id="@+id/action_tareas"
+        android:title="Tareas" />
 </menu>

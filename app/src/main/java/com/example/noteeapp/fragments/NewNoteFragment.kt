@@ -1,15 +1,20 @@
 package com.example.noteeapp.fragments
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import android.net.Uri
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.example.noteeapp.MainActivity
 import com.example.noteeapp.R
 import com.example.noteeapp.databinding.FragmentNewNoteBinding
@@ -38,6 +43,10 @@ class NewNoteFragment : Fragment() {
     var photoURI: Uri? = null
     var videoURI: Uri? = null
 
+    private var fileName: String = ""
+    private var recorder: MediaRecorder? = null
+    private var player: MediaPlayer? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +58,10 @@ class NewNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View?{
         _binding = FragmentNewNoteBinding.inflate(inflater, container, false)
+
+        var dir = "android.resource://" + requireActivity().packageName + "/" + R.raw.espectro_audio
+        binding.videoEspectro.setVideoURI(dir.toUri())
+        binding.videoEspectro.start()
 
         binding.btnFoto.setOnClickListener {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -101,6 +114,46 @@ class NewNoteFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        binding.enoteImagen.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle(R.string.alerta_borrarIMG_titulo)
+                .setMessage(R.string.alerta_borrarIMG_mensaje)
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.aceptar) { view, _ ->
+                    photoURI = null
+                    binding.enoteImagen.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Se ha eliminado", Toast.LENGTH_SHORT).show()
+                    view.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+            dialog.show()
+            return@setOnLongClickListener false
+        }
+
+        binding.eNoteVideo.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle(R.string.alerta_borrarVIDEO_titulo)
+                .setMessage(R.string.alerta_borrarVIDEO_mensaje)
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.aceptar) { view, _ ->
+                    videoURI = null
+                    binding.eNoteVideo.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Se ha eliminado", Toast.LENGTH_SHORT).show()
+                    view.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+            dialog.show()
+            return@setOnLongClickListener false
         }
 
         binding.eNoteVideo.setOnClickListener{

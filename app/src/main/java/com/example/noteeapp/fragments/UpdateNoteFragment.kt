@@ -106,11 +106,31 @@ class UpdateNoteFragment : Fragment() {
                 .setTitle(R.string.alerta_borrarIMG_titulo)
                 .setMessage(R.string.alerta_borrarIMG_mensaje)
                 .setNegativeButton(R.string.cancelar) { view, _ ->
-                    photoURI = null
-                    binding.enotaImgenUpdate.visibility = View.GONE
                     view.dismiss()
                 }
                 .setPositiveButton(R.string.aceptar) { view, _ ->
+                    photoURI = null
+                    binding.enotaImgenUpdate.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Se ha eliminado", Toast.LENGTH_SHORT).show()
+                    view.dismiss()
+                }
+                .setCancelable(false)
+                .create()
+
+            dialog.show()
+            return@setOnLongClickListener false
+        }
+
+        binding.eNotaVideoUpdate.setOnLongClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle(R.string.alerta_borrarVIDEO_titulo)
+                .setMessage(R.string.alerta_borrarVIDEO_mensaje)
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.aceptar) { view, _ ->
+                    videoURI = null
+                    binding.eNotaVideoUpdate.visibility = View.GONE
                     Toast.makeText(requireContext(), "Se ha eliminado", Toast.LENGTH_SHORT).show()
                     view.dismiss()
                 }
