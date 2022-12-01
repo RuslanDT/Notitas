@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.navigation.findNavController
 import com.example.noteeapp.MainActivity
 import com.example.noteeapp.R
 import com.example.noteeapp.databinding.FragmentNewNoteBinding
@@ -158,7 +159,9 @@ class NewNoteFragment : Fragment() {
                 "Nota guardada",
                 Snackbar.LENGTH_SHORT,
             ).show()
-            replaceFragment(HomeFragment())
+            //replaceFragment(HomeFragment())
+            val direction = NewNoteFragmentDirections.actionNewNoteFragmentToHomeFragment()
+            view.findNavController().navigate(direction)
         } else {
             activity?.toast("Agrega un titulo")
         }

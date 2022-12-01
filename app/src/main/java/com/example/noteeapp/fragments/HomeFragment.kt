@@ -2,8 +2,6 @@ package com.example.noteeapp.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -38,7 +36,15 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         noteViewModel = (activity as MainActivity).noteViewModel
 
-
+        _binding!!.botonNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.action_tareas -> {
+                    view?.findNavController()?.navigate(HomeFragmentDirections.actionHomeFragmentToHomeTaskFragment()); true
+                }
+                R.id.action_notas -> {true}
+                else -> {false}
+            }
+        }
         setUpRecyclerView()
         return binding.root
     }
@@ -62,7 +68,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fabAddNote.setOnClickListener {
-            replaceFragment(NewNoteFragment())
+            //replaceFragment(NewNoteFragment())
+            it.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewNoteFragment())
         }
     }
 

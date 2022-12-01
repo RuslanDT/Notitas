@@ -6,7 +6,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.noteeapp.model.Task
 
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [Task::class], version = 2)
 abstract class TaskDataBase : RoomDatabase() {
 
     abstract fun getTaskDao(): TaskDao

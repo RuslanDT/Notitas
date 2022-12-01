@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteeapp.databinding.TaskItemBinding
 import com.example.noteeapp.fragments.HomeFragmentDirections
+import com.example.noteeapp.fragments.HomeTaskFragmentDirections
 import com.example.noteeapp.model.Task
 import kotlin.random.Random
 
@@ -36,13 +37,14 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
             random.nextInt(256)
         )
         holder.itemBinding.viewColor.setBackgroundColor(color)
-        /*
+
         holder.itemView.setOnClickListener {
-            it.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentTask))
+                view ->
+            val direction = HomeTaskFragmentDirections.actionHomeTaskFragmentToUpdateTaskFragment(currentTask)
+            view.findNavController().navigate(direction)
         }
 
-         */
+
 
     }
 

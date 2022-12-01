@@ -2,17 +2,13 @@ package com.example.noteeapp.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noteeapp.MainActivity
 import com.example.noteeapp.R
-import com.example.noteeapp.adapter.NoteAdapter
 import com.example.noteeapp.adapter.TaskAdapter
-import com.example.noteeapp.databinding.FragmentHomeBinding
 import com.example.noteeapp.databinding.FragmentTaskHomeBinding
 import com.example.noteeapp.viewModel.NoteViewModel
 import com.example.noteeapp.viewModel.TaskViewModel
@@ -38,7 +34,14 @@ class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding = FragmentTaskHomeBinding.inflate(inflater, container, false)
 
         taskViewModel = (activity as MainActivity).taskViewModel
-
+        _binding!!.botonNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.action_tareas -> { true
+                }
+                R.id.action_notas -> {view?.findNavController()?.navigate(HomeTaskFragmentDirections.actionHomeTaskFragmentToHomeFragment()); return@setOnItemSelectedListener true}
+                else -> {false}
+            }
+        }
         setUpRecyclerView()
         return binding.root
     }
@@ -62,7 +65,8 @@ class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fabAddNote.setOnClickListener {
-            replaceFragment(NewTaskFragment())
+            //replaceFragment(NewTaskFragment())
+            it.findNavController().navigate(HomeTaskFragmentDirections.actionHomeTaskFragmentToNewTaskFragment())
         }
     }
 

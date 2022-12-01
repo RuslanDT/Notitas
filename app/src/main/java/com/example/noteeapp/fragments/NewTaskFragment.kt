@@ -58,7 +58,8 @@ class NewTaskFragment : Fragment() {
                 "Tarea guardada",
                 Snackbar.LENGTH_SHORT,
             ).show()
-            replaceFragment(HomeTaskFragment())
+                val direction = NewTaskFragmentDirections.actionNewTaskFragmentToHomeTaskFragment()
+                view.findNavController().navigate(direction)
         } else {
             activity?.toast("Agrega un titulo")
         }
