@@ -2,6 +2,7 @@ package com.example.noteeapp.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.navigation.findNavController
@@ -28,7 +29,14 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         holder.itemBinding.tvNoteTitle.text = currentNote.noteTitle
         holder.itemBinding.tvNoteBody.text = currentNote.noteBody
-        holder.itemBinding.imgNota.setImageURI(currentNote.noteImagen.toUri())
+
+        if(currentNote.noteImagen == ""){
+            holder.itemBinding.imgNota.visibility = View.GONE
+        }else{
+            holder.itemBinding.imgNota.setImageURI(currentNote.noteImagen.toUri())
+        }
+
+        holder.itemBinding.tvDate.text = currentNote.noteDate
 
         val random = java.util.Random()
         val color = Color.argb(

@@ -45,7 +45,7 @@
                     android:padding="16dp">
 
                     <EditText
-                        android:id="@+id/etNoteTitleUpdate"
+                        android:id="@+id/etTaskTitleUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autofillHints=""
@@ -59,7 +59,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/etNoteBodyUpdate"
+                        android:id="@+id/etTaskBodyUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="78dp"
                         android:layout_marginTop="16dp"
@@ -74,48 +74,6 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/layoutAudioUpdate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <VideoView
-                    android:id="@+id/videoEspectroUpdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/layout5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/btnGrabarUpdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/rojo"
-                        android:src="@drawable/grabar_icon" />
-
-                    <ImageView
-                        android:id="@+id/btnReproducirUpdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/verde"
-                        android:src="@drawable/play64" />
-
-                </LinearLayout>
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/enotaImgenUpdate"
@@ -137,54 +95,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnFotoUpdate"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        app:cornerRadius="50dp"
-        app:icon="@drawable/foto_icon"
-        app:iconGravity="textEnd"
-        app:iconPadding="0dp"
-        app:iconSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-    <Button
-        android:id="@+id/btnVideoUpdate"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        app:cornerRadius="50dp"
-        app:icon="@drawable/video"
-        app:iconGravity="textEnd"
-        app:iconPadding="0dp"
-        app:iconSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnVozUpdtae"
-        app:layout_constraintHorizontal_bias=".5"
-        app:layout_constraintStart_toEndOf="@+id/btnFotoUpdate"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnVozUpdtae"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        app:cornerRadius="50dp"
-        app:icon="@drawable/micro_icon"
-        app:iconGravity="textEnd"
-        app:iconPadding="0dp"
-        app:iconSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
         android:id="@+id/fabUpdate"

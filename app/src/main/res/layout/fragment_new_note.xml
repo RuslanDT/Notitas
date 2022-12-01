@@ -95,11 +95,47 @@
                 android:layout_marginBottom="40dp"
                 android:visibility="gone" />
 
-            <VideoView
-                android:id="@+id/videoEspectro"
-                android:layout_width="350dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:id="@+id/layoutAudio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <VideoView
+                    android:id="@+id/videoEspectro"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btnGrabar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/rojo"
+                        android:src="@drawable/grabar_icon" />
+
+                    <ImageView
+                        android:id="@+id/btnReproducir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/verde"
+                        android:src="@drawable/play64" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -113,6 +149,7 @@
         app:icon="@drawable/foto_icon"
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
+        app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="@+id/scrollView3"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +164,7 @@
         app:icon="@drawable/video"
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
+        app:iconSize="30dp"
         app:layout_constraintEnd_toStartOf="@+id/btnVoz"
         app:layout_constraintStart_toEndOf="@+id/btnFoto"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
@@ -140,6 +178,7 @@
         app:icon="@drawable/micro_icon"
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
+        app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="@+id/scrollView3"

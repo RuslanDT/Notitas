@@ -88,5 +88,21 @@
         <action
             android:id="@+id/action_homeTaskFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeTaskFragment_to_updateTaskFragment"
+            app:destination="@id/updateTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateTaskFragment"
+        android:name="com.example.noteeapp.fragments.UpdateTaskFragment"
+        android:label="UpdateTaskFragment"
+        tools:layout="@layout/fragment_new_note">
+        <argument
+            android:name="task"
+            app:argType="com.example.noteeapp.model.Task"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_updateTaskFragment_to_homeTaskFragment"
+            app:destination="@id/homeTaskFragment" />
     </fragment>
 </navigation>
