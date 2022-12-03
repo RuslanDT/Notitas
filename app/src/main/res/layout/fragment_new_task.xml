@@ -51,16 +51,52 @@
                     android:hint="Tarea"
                     android:inputType="textPersonName" />
 
-                <TextView
-                    android:id="@+id/textView3"
+                <LinearLayout
+                    android:id="@+id/dateText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fecha de finalización:" />
+                    android:orientation="horizontal">
 
-                <CalendarView
-                    android:id="@+id/finishDate"
-                    android:layout_width="244dp"
-                    android:layout_height="328dp" />
+                    <Button
+                        android:id="@+id/Calendario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Calendario" />
+
+                    <TextView
+                        android:id="@+id/textDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hora" />
+
+                    <TextView
+                        android:id="@+id/timerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnSaveAlarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar Alarma" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

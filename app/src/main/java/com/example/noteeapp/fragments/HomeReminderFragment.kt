@@ -8,18 +8,18 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noteeapp.MainActivity
 import com.example.noteeapp.R
-import com.example.noteeapp.adapter.TaskAdapter
-import com.example.noteeapp.databinding.FragmentTaskHomeBinding
-import com.example.noteeapp.viewModel.NoteViewModel
-import com.example.noteeapp.viewModel.TaskViewModel
+import com.example.noteeapp.adapter.NoteAdapter
+import com.example.noteeapp.adapter.ReminderAdapter
+import com.example.noteeapp.databinding.FragmentReminderHomeBinding
+import com.example.noteeapp.viewModel.ReminderViewModel
 
 
-class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
-    private var _binding: FragmentTaskHomeBinding? = null
+class HomeReminderFragment : Fragment() {
+    private var _binding: FragmentReminderHomeBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var taskViewModel: TaskViewModel
-    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var reminderViewModel: ReminderViewModel
+    private lateinit var reminderAdapter: ReminderAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,46 +31,43 @@ class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTaskHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentReminderHomeBinding.inflate(inflater, container, false)
 
-        taskViewModel = (activity as MainActivity).taskViewModel
+        reminderViewModel = (activity as MainActivity).reminderViewModel
+
         _binding!!.botonNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.action_tareas -> { true
+                R.id.action_tareas -> {
+                    view?.findNavController()?.navigate(HomeReminderFragmentDirections.actionHomeReminderFragmentToHomeTaskFragment()); true
                 }
-                R.id.action_notas -> {view?.findNavController()?.navigate(HomeTaskFragmentDirections.actionHomeTaskFragmentToHomeFragment()); return@setOnItemSelectedListener true}
+                R.id.action_notas -> {
+                    view?.findNavController()?.navigate(HomeReminderFragmentDirections.actionHomeReminderFragmentToHomeFragment()); true
+                }
                 else -> {false}
             }
-        }
-        _binding!!.btnReminders.setOnClickListener{
-            view?.findNavController()?.navigate(HomeTaskFragmentDirections.actionHomeTaskFragmentToHomeReminderFragment())
         }
         setUpRecyclerView()
         return binding.root
     }
 
     private fun setUpRecyclerView() {
-        taskAdapter = TaskAdapter()
+        reminderAdapter = ReminderAdapter()
         binding.notesRV.apply {
             layoutManager = StaggeredGridLayoutManager(
                 2,
                 StaggeredGridLayoutManager.VERTICAL
             )
             setHasFixedSize(true)
-            adapter = taskAdapter
-            taskViewModel.getAllTasks().observe(viewLifecycleOwner) { tasks ->
-                taskAdapter.differ.submitList(tasks)
-                tasks.updateUI()
+            adapter = reminderAdapter
+            reminderViewModel.getAllReminders().observe(viewLifecycleOwner) { reminder ->
+                reminderAdapter.differ.submitList(reminder)
+                reminder.updateUI()
             }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fabAddNote.setOnClickListener {
-            //replaceFragment(NewTaskFragment())
-            it.findNavController().navigate(HomeTaskFragmentDirections.actionHomeTaskFragmentToNewTaskFragment())
-        }
     }
 
     private fun replaceFragment(fragment : Fragment){
@@ -87,7 +84,6 @@ class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val searchItem = menu.findItem(R.id.menu_search).actionView as SearchView
         searchItem.isSubmitButtonEnabled = true
-        searchItem.setOnQueryTextListener(this)
 
     }
 
@@ -106,27 +102,9 @@ class HomeTaskFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            searchNote(query)
-        }
-        return true
-    }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            searchNote(newText)
-        }
-        return true
-    }
 
-    private fun searchNote(query: String?) {
-        val searchQuery = "%$query%"
-        taskViewModel.searchTask(searchQuery).observe(this) { tasks ->
-            taskAdapter.differ.submitList(tasks)
-        }
 
-    }
 }
 
 

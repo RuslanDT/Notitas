@@ -15,16 +15,15 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.noteeapp.database.NoteDataBase
+import com.example.noteeapp.database.ReminderDataBase
 import com.example.noteeapp.database.TaskDataBase
 import com.example.noteeapp.databinding.ActivityMainBinding
 import com.example.noteeapp.fragments.HomeFragment
 import com.example.noteeapp.fragments.HomeTaskFragment
 import com.example.noteeapp.repository.NoteRepository
+import com.example.noteeapp.repository.ReminderRepository
 import com.example.noteeapp.repository.TaskRepository
-import com.example.noteeapp.viewModel.NoteViewModel
-import com.example.noteeapp.viewModel.NoteViewModelProviderFactory
-import com.example.noteeapp.viewModel.TaskViewModel
-import com.example.noteeapp.viewModel.TaskViewModelProviderFactory
+import com.example.noteeapp.viewModel.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var noteViewModel: NoteViewModel
     lateinit var taskViewModel: TaskViewModel
+    lateinit var reminderViewModel: ReminderViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         setUp()
         setUpTask()
+        setUpReminder()
     }
 
     private fun replaceFragment(fragment : Fragment){
@@ -103,5 +104,22 @@ class MainActivity : AppCompatActivity() {
             viewModelProviderFactory
         )
             .get(TaskViewModel::class.java)
+    }
+    private fun setUpReminder() {
+        val reminderDataBase = ReminderDataBase.getInstance(this)
+        val reminderRepository = ReminderRepository(
+            reminderDataBase
+        )
+
+        val viewModelProviderFactory = ReminderViewModelProviderFactory(
+            application,
+            reminderRepository
+        )
+
+        reminderViewModel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        )
+            .get(ReminderViewModel::class.java)
     }
 }

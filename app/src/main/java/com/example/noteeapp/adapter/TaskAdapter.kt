@@ -28,6 +28,7 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
         holder.itemBinding.TitleTask.text = currentTask.taskTitle
         holder.itemBinding.TaskBody.text = currentTask.taskBody
+        holder.itemBinding.date.text = currentTask.initialDate
 
         val random = java.util.Random()
         val color = Color.argb(

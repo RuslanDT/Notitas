@@ -2,6 +2,7 @@ package com.example.noteeapp.model
 
 import android.net.Uri
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -31,4 +32,16 @@ data class Task(
     val taskBody: String,
     val initialDate: String,
     val finalDate: String
+) : Parcelable
+
+@Entity(tableName = "reminder")
+@Parcelize
+data class Reminder(
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L,
+    @ColumnInfo(index = true)
+    var idTask: Int,
+    var dateReminder: String,
+    var title: String,
+    var body: String
 ) : Parcelable

@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_homeTaskFragment_to_updateTaskFragment"
             app:destination="@id/updateTaskFragment" />
+        <action
+            android:id="@+id/action_homeTaskFragment_to_homeReminderFragment"
+            app:destination="@id/homeReminderFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateTaskFragment"
@@ -104,5 +107,17 @@
         <action
             android:id="@+id/action_updateTaskFragment_to_homeTaskFragment"
             app:destination="@id/homeTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeReminderFragment"
+        android:name="com.example.noteeapp.fragments.HomeReminderFragment"
+        android:label="HomeReminderFragment"
+        tools:layout="@layout/fragment_new_note">
+        <action
+            android:id="@+id/action_homeReminderFragment_to_homeTaskFragment"
+            app:destination="@id/homeTaskFragment" />
+        <action
+            android:id="@+id/action_homeReminderFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
