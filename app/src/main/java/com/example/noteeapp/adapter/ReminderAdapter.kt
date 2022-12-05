@@ -1,24 +1,33 @@
 package com.example.noteeapp.adapter
 
+import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.noteeapp.R
 import com.example.noteeapp.databinding.ReminderItemBinding
-import com.example.noteeapp.fragments.HomeFragment
-import com.example.noteeapp.fragments.HomeFragmentDirections
-import com.example.noteeapp.fragments.HomeTaskFragmentDirections
-import com.example.noteeapp.model.Note
+import com.example.noteeapp.fragments.HomeReminderFragmentDirections
+import com.example.noteeapp.fragments.UpdateNoteFragmentDirections
 import com.example.noteeapp.model.Reminder
+import com.example.noteeapp.viewModel.ReminderViewModel
+import androidx.navigation.findNavController
 
 class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
 
+    lateinit var context : Context
+    lateinit var reminderVM: ReminderViewModel
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
+        context = parent.context
+
         return ReminderViewHolder(
             ReminderItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -28,11 +37,10 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
         val currentReminder = differ.currentList[position]
+        //reminderVM = (ReminderViewHolder as ReminderViewModel)
 
         holder.itemBinding.tvReminderTitle.text = currentReminder.title
-        holder.itemBinding.tvReminderBody.text = currentReminder.body
-
-
+        holder.itemBinding.tvReminderBody.text = currentReminder.hourRemainder
 
         holder.itemBinding.tvDate.text = currentReminder.dateReminder
 
@@ -43,11 +51,29 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>
             random.nextInt(256),
             random.nextInt(256)
         )
+
         holder.itemBinding.viewColor.setBackgroundColor(color)
-        //falta pasarle el parametro si se quiere hacer otra ventana para actualizar
-        holder.itemView.setOnClickListener {
-            view ->
-            val direction = HomeTaskFragmentDirections.actionHomeTaskFragmentToHomeReminderFragment()
+
+        holder.itemView.setOnLongClickListener{
+            val dialog = AlertDialog.Builder(context)
+                .setTitle(R.string.alerta_borrarVIDEO_titulo)
+                .setMessage(R.string.alerta_borrarVIDEO_mensaje)
+                .setNegativeButton(R.string.cancelar) { view, _ ->
+                    view.dismiss()
+                }
+                .setPositiveButton(R.string.aceptar) { view, _ ->
+                    //reminderVM.deleteReminder(currentReminder)
+                    Toast.makeText(context, "Reminder eliminado", Toast.LENGTH_SHORT).show()
+                }
+                .setCancelable(false)
+                .create()
+
+            dialog.show()
+            return@setOnLongClickListener false
+        }
+
+        holder.itemView.setOnClickListener { view ->
+            val direction = HomeReminderFragmentDirections.actionHomeReminderFragmentToUpdateReminder(currentReminder)
             view.findNavController().navigate(direction)
         }
 
@@ -73,5 +99,4 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>
 
     }
     val differ = AsyncListDiffer(this, diffUtilCall)
-
 }

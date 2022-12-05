@@ -68,7 +68,7 @@
         android:id="@+id/newTaskFragment"
         android:name="com.example.noteeapp.fragments.NewTaskFragment"
         android:label="NewTaskFragment"
-        tools:layout="@layout/fragment_new_note">
+        tools:layout="@layout/fragment_new_task">
         <action
             android:id="@+id/action_newTaskFragment_to_homeTaskFragment"
             app:destination="@id/homeTaskFragment" />
@@ -77,7 +77,7 @@
         android:id="@+id/homeTaskFragment"
         android:name="com.example.noteeapp.fragments.HomeTaskFragment"
         android:label="HomeTaskFragment"
-        tools:layout="@layout/fragment_new_note">
+        tools:layout="@layout/fragment_task_home">
 
         <action
             android:id="@+id/action_homeTaskFragment_to_newNoteFragment"
@@ -99,7 +99,7 @@
         android:id="@+id/updateTaskFragment"
         android:name="com.example.noteeapp.fragments.UpdateTaskFragment"
         android:label="UpdateTaskFragment"
-        tools:layout="@layout/fragment_new_note">
+        tools:layout="@layout/fragment_update_task">
         <argument
             android:name="task"
             app:argType="com.example.noteeapp.model.Task"
@@ -112,12 +112,32 @@
         android:id="@+id/homeReminderFragment"
         android:name="com.example.noteeapp.fragments.HomeReminderFragment"
         android:label="HomeReminderFragment"
-        tools:layout="@layout/fragment_new_note">
+        tools:layout="@layout/fragment_reminder_home">
         <action
             android:id="@+id/action_homeReminderFragment_to_homeTaskFragment"
             app:destination="@id/homeTaskFragment" />
         <action
             android:id="@+id/action_homeReminderFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeReminderFragment_to_updateReminder"
+            app:destination="@id/updateReminder" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateReminder"
+        android:name="com.example.noteeapp.updateReminder"
+        android:label="updateReminder"
+        tools:layout="@layout/fragment_update_reminder">
+        <action
+            android:id="@+id/action_updateReminder_to_homeReminderFragment"
+            app:destination="@id/homeReminderFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="reminder"
+            app:argType="com.example.noteeapp.model.Reminder"
+            app:nullable="true" />
     </fragment>
 </navigation>

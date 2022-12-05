@@ -5,20 +5,13 @@ import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.noteeapp.MainActivity
@@ -53,6 +46,7 @@ class NewTaskFragment : Fragment() {
     private var minute: Int = 0
     private var milliseconds: ArrayList<Long> = ArrayList()
     private var dateReminder: ArrayList<String> = ArrayList()
+    private var hourReminder: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,16 +68,22 @@ class NewTaskFragment : Fragment() {
         binding.timer.setOnClickListener{
             showTimePickerDialog()
         }
-        //para guardar la alarma en un arreglo
-        val calendar: Calendar = Calendar.getInstance()
-        val CurrentCalendar: Long = System.currentTimeMillis()
+
         binding.btnSaveAlarm.setOnClickListener{
+            //para guardar la alarma en un arreglo
+            val calendar: Calendar = Calendar.getInstance()
+            val CurrentCalendar: Long = System.currentTimeMillis()
+
             //hacemos un calendario con la fecha que selecciono el usuario para guardar los milisegundos en un array
             calendar.set(this.year, this.month-1, this.day, this.hour, this.minute, 0)
+
             //tambien pasamos la fecha en texto
             //arraylist de todas las alarmas que guarde
             dateReminder?.add("$year/$month/$day")
+            hourReminder?.add("$hour:$minute")
             milliseconds?.add(calendar.timeInMillis - CurrentCalendar)
+
+            Toast.makeText(requireContext(), "Alarma agregada", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }
@@ -116,12 +116,14 @@ class NewTaskFragment : Fragment() {
                 //se crea la notificacion
                 val intent = Intent(requireContext(), ReminderBroadCast(taskTitle,taskBody,task.id).onReceive(requireContext(), intent = null)::class.java)
                 val pendingIntent = PendingIntent.getBroadcast(requireContext(), task.id, intent, 0)
+
                 //se programa la notificacion
                 val alarmManager = activity?.getSystemService(ALARM_SERVICE) as AlarmManager
                 alarmManager.set(AlarmManager.RTC_WAKEUP, i, pendingIntent)
                 Toast.makeText(requireContext(), "Alarma programada", Toast.LENGTH_SHORT).show()
+
                 //agregamos el reecordatorio a la base de datos
-                val reminder = Reminder(0,task.id, dateReminder[index], taskTitle, taskBody)
+                val reminder = Reminder(0,task.id, dateReminder[index], hourReminder[index], taskTitle, taskBody)
                 reminderViewModel.addReminder(reminder)
                 index++
             }
@@ -131,8 +133,9 @@ class NewTaskFragment : Fragment() {
                 "Tarea guardada",
                 Snackbar.LENGTH_SHORT,
             ).show()
-                val direction = NewTaskFragmentDirections.actionNewTaskFragmentToHomeTaskFragment()
-                view.findNavController().navigate(direction)
+
+            val direction = NewTaskFragmentDirections.actionNewTaskFragmentToHomeTaskFragment()
+            view.findNavController().navigate(direction)
         } else {
             activity?.toast("Agrega un titulo")
         }
@@ -188,14 +191,15 @@ class NewTaskFragment : Fragment() {
             val notificationManager = getSystemService(requireContext(),NotificationManager::class.java)
             notificationManager?.createNotificationChannel(channel)
 
-
         }
     }
+
     //para el dia, mes, anio
     private fun showDatePickerDialog(){
         val newFragment = DatePicker{ day, month, year -> onDateSelected(day, month, year)}
         activity?.let { newFragment.show(it.supportFragmentManager, "datePicker")}
     }
+
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(day: Int, month: Int, year: Int ){
         binding.textDate.text = ("$day/$month/$year")
@@ -209,13 +213,13 @@ class NewTaskFragment : Fragment() {
         val newFragment = TimerPicker{ hour, minute -> onTimeSelected(hour, minute)}
         activity?.let { newFragment.show(it.supportFragmentManager, "TimePicker")}
     }
+
     @SuppressLint("SetTextI18n")
     private fun onTimeSelected(hour: Int, minute: Int ){
         binding.timerText.text = ("$hour : $minute")
         this.hour = hour
         this.minute = minute
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

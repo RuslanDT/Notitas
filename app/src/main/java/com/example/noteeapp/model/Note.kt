@@ -42,6 +42,7 @@ data class Reminder(
     @ColumnInfo(index = true)
     var idTask: Int,
     var dateReminder: String,
+    var hourRemainder: String,
     var title: String,
     var body: String
 ) : Parcelable
