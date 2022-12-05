@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.media.audiofx.BassBoost
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -80,20 +81,13 @@ class NewTaskFragment : Fragment() {
             ////hacemos un calendario con la fecha que selecciono el usuario para guardar los milisegundos en un array
             calendar.set(this.year, this.month-1, this.day, this.hour, this.minute, 0)
 
-            //calendar.set(Calendar.YEAR, this.year)
-            //calendar.set(Calendar.MONTH, this.month-1)
-            //calendar.set(Calendar.DAY_OF_MONTH, this.day)
-            //calendar.set(Calendar.HOUR_OF_DAY, this.hour)
-            //calendar.set(Calendar.MINUTE, this.minute)
-            //calendar.set(Calendar.SECOND, 0)
-
 
             //tambien pasamos la fecha en texto
             //arraylist de todas las alarmas que guarde
             dateReminder?.add("$year/$month/$day")
             hourReminder?.add("$hour:$minute")
             //milliseconds?.add(calendar.timeInMillis)
-            milliseconds?.add(calendar.timeInMillis - CurrentCalendar)
+            milliseconds?.add(calendar.timeInMillis)
             Toast.makeText(requireContext(), "Alarma agregada", Toast.LENGTH_SHORT).show()
         }
         return binding.root
@@ -126,16 +120,18 @@ class NewTaskFragment : Fragment() {
             var id = task.id
             for(i in milliseconds){
                 //se crea la notificacion
-                val intent = Intent(requireContext(), ReminderBroadCast(taskTitle,taskBody, id).onReceive(requireContext(), intent = null)::class.java)
+                val intent = Intent(requireContext(), ReminderBroadCast::class.java)
+                intent.action = id.toString() + " " + task.taskTitle + " " + task.taskBody
                 val pendingIntent = PendingIntent.getBroadcast(requireContext(), id, intent, PendingIntent.FLAG_IMMUTABLE)
 
                 //se programa la notificacion
                 val alarmManager = activity?.getSystemService(ALARM_SERVICE) as AlarmManager
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, i, pendingIntent)
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,i, pendingIntent)
                 }else{
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, i, pendingIntent)
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,i, pendingIntent)
                 }
+
 
                 //agregamos el reecordatorio a la base de datos
                 val reminder = Reminder(0,task.id, dateReminder[index], hourReminder[index], taskTitle, taskBody)

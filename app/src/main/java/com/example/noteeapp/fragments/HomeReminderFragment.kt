@@ -51,7 +51,7 @@ class HomeReminderFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        reminderAdapter = ReminderAdapter()
+        reminderAdapter = ReminderAdapter(reminderViewModel)
         binding.notesRV.apply {
             layoutManager = StaggeredGridLayoutManager(
                 2,

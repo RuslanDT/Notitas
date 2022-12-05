@@ -20,10 +20,10 @@ import com.example.noteeapp.model.Reminder
 import com.example.noteeapp.viewModel.ReminderViewModel
 import androidx.navigation.findNavController
 
-class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
+class ReminderAdapter(var reminderVM: ReminderViewModel) : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
 
     lateinit var context : Context
-    lateinit var reminderVM: ReminderViewModel
+    //lateinit var reminderVM: ReminderViewModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
         context = parent.context
@@ -62,7 +62,7 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>
                     view.dismiss()
                 }
                 .setPositiveButton(R.string.aceptar) { view, _ ->
-                    //reminderVM.deleteReminder(currentReminder)
+                    reminderVM.deleteReminder(currentReminder)
                     Toast.makeText(context, "Reminder eliminado", Toast.LENGTH_SHORT).show()
                 }
                 .setCancelable(false)
@@ -75,6 +75,7 @@ class ReminderAdapter : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>
         holder.itemView.setOnClickListener { view ->
             val direction = HomeReminderFragmentDirections.actionHomeReminderFragmentToUpdateReminder(currentReminder)
             view.findNavController().navigate(direction)
+
         }
 
     }

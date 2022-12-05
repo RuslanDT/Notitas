@@ -65,8 +65,7 @@ class UpdateReminderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         currentReminder = args.reminder!!
-
-        binding.titleTaskUpdate.setText(currentReminder.title)
+        binding.titleTaskUpdate.setText("eeeee")
         binding.taskBodyUpdate.setText(currentReminder.body)
         binding.textDateUpdate.text = currentReminder.dateReminder
         binding.timerTextUpdate.text = currentReminder.hourRemainder
@@ -84,12 +83,14 @@ class UpdateReminderFragment : Fragment() {
             val body = binding.taskBodyUpdate.text.toString().trim()
 
             if (title.isNotEmpty()) {
-                val intent = Intent(requireContext(), ReminderBroadCast(title,body, currentReminder.idTask).onReceive(requireContext(), intent = null)::class.java)
+//                val intent = Intent(requireContext(), ReminderBroadCast(title,body, currentReminder.idTask).onReceive(requireContext(), intent = null)::class.java)
+                val intent = Intent(requireContext(), ReminderBroadCast::class.java)
+                intent.putExtra("id", currentReminder.idTask)
                 val pendingIntent = PendingIntent.getBroadcast(requireContext(), currentReminder.idTask, intent, 0)
 
                 //se programa la notificacion
                 val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmManager.set(AlarmManager.RTC_WAKEUP, 60*1000, pendingIntent)
+                alarmManager.set(AlarmManager.RTC_WAKEUP, 6*1000, pendingIntent)
                 Toast.makeText(requireContext(), "Alarma programada", Toast.LENGTH_SHORT).show()
             } else {
                 activity?.toast("Agrega un titulo")
